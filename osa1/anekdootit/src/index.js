@@ -31,12 +31,16 @@ const App = (props) => {
       <p>
         {props.anecdotes[selected]}
       </p>
+      <p>
+        has {points[selected]} votes
+      </p>
       <Button text='vote' handleOnClick={handleVoteOnClick} />
       <Button text='new anecdote' handleOnClick={handleOnClick} />
       <h1>Anecdote with most votes</h1>
       {
         props.anecdotes[points.findIndex(value => value === Math.max(...points))]
       }
+      <p>has {Math.max(...points)} votes</p>
     </div>
   )
 };
