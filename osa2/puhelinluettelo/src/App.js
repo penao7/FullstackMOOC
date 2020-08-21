@@ -26,8 +26,7 @@ const App = () => {
       })
   };
 
-  const updatePerson = () => {
-    const id = (persons.find(person => person.name.toLocaleLowerCase() === newPerson.name.toLocaleLowerCase()).id);
+  const updatePerson = (id, newPerson) => {
     personService
       .update(id, newPerson)
       .then(newData => {
@@ -35,16 +34,24 @@ const App = () => {
         messageHandler(`Contact ${newPerson.name} updated!`)
       })
       .then(setNewPerson({ name: '', number: '' }))
-      .catch(err => messageHandler(null, `Error with updating person: ${err}`))
+      .catch(err => messageHandler(null, JSON.stringify(err.response.data)))
   };
 
   const addPerson = (e) => {
     e.preventDefault();
+
+    if (!newPerson.name) {
+      return alert('name is missing')
+    }
+    else if (!newPerson.number) {
+      return alert('number is missing')
+    };
+
     return (
       persons.some(person => person.name.toLocaleLowerCase() === newPerson.name.toLocaleLowerCase())
         ?
         window.confirm(`Contact ${newPerson.name} is already added to phonebook, replace the old number with a new one?`)
-          ? updatePerson()
+          ? updatePerson(persons.find(person => person.name.toLocaleLowerCase() === newPerson.name.toLocaleLowerCase()).id, newPerson)
           : ""
         :
         personService
@@ -54,7 +61,7 @@ const App = () => {
             messageHandler(`Contact ${returnedPerson.name} added succesfully`)
             setNewPerson({ name: '', number: '' });
           })
-          .catch(err => messageHandler(null, `Error with adding person: ${err}`))
+          .catch(err => messageHandler(null, JSON.stringify(err.response.data)))
     );
   };
 
@@ -64,9 +71,9 @@ const App = () => {
     }, 5000);
 
     return (
-      success 
-      ? setMessage({status: true, message: success})
-      : setMessage({status: false, message: err})
+      success
+        ? setMessage({ status: true, message: success })
+        : setMessage({ status: false, message: err })
     );
   };
 
@@ -79,6 +86,7 @@ const App = () => {
           .deletePerson(id)
           .then(res => {
             setPersons(persons.filter(person => person.id !== id));
+            setFilteredPersons('');
             messageHandler(`Contact ${person.name} deleted`);
           })
           .catch(err => messageHandler(null, `Error deleting person: ${err}`))

@@ -10,7 +10,7 @@ const Notification = ({ message }) => {
     borderRadius: '5px',
     padding: '10px',
     marginBottom: '10px',
-    width: '300px'
+    width: '700px'
   };
 
   const notificationSuccessStyles = {
@@ -21,7 +21,7 @@ const Notification = ({ message }) => {
     borderRadius: '5px',
     padding: '10px',
     marginBottom: '10px',
-    width: '300px'
+    width: '700px'
   };
 
   return (
