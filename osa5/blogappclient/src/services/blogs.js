@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = '/api/blogs'
+const baseUrl = '/api/blogs';
 
 let token = null;
 
@@ -9,7 +9,7 @@ const setToken = newToken => {
 
 const getAll = () => {
   return axios.get(baseUrl)
-    .then(res => { return res.data });
+    .then(res => { return res.data; });
 };
 
 const create = async (newBlog) => {
@@ -19,7 +19,7 @@ const create = async (newBlog) => {
     }
   };
   return axios.post(baseUrl, newBlog, config)
-    .then(res => { return res.data })
+    .then(res => { return res.data; });
 };
 
 const update = (id, newBlog) => {
@@ -29,7 +29,7 @@ const update = (id, newBlog) => {
     }
   };
   return axios.put(`${baseUrl}/${id}`, newBlog, config)
-    .then(res => { return res.data });
+    .then(res => { return res.data; });
 };
 
 const deleteBlog = async (id) => {
@@ -39,7 +39,7 @@ const deleteBlog = async (id) => {
     }
   };
   return axios.delete(`${baseUrl}/${id}`, config)
-    .then(res => { return res });
+    .then(res => { return res; });
 };
 
 export default {
