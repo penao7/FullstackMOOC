@@ -7,9 +7,11 @@ const setToken = newToken => {
   token = newToken;
 };
 
-const getAll = () => {
-  return axios.get(baseUrl)
-    .then(res => { return res.data; });
+
+const getAll = async () => {
+  const blogs = await axios.get(baseUrl);
+  return blogs.data;
+
 };
 
 const create = async (newBlog) => {
@@ -18,18 +20,19 @@ const create = async (newBlog) => {
       Authorization: `bearer ${token}`
     }
   };
-  return axios.post(baseUrl, newBlog, config)
-    .then(res => { return res.data; });
+    const returnedNewBlog = await axios.post(baseUrl, newBlog, config);
+    return returnedNewBlog.data;
+
 };
 
-const update = (id, newBlog) => {
+const update = async (id, newBlog) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`
     }
   };
-  return axios.put(`${baseUrl}/${id}`, newBlog, config)
-    .then(res => { return res.data; });
+    const updatedBlog = await axios.put(`${baseUrl}/${id}`, newBlog, config);
+    return updatedBlog.data;
 };
 
 const deleteBlog = async (id) => {
@@ -38,8 +41,8 @@ const deleteBlog = async (id) => {
       Authorization: `bearer ${token}`
     }
   };
-  return axios.delete(`${baseUrl}/${id}`, config)
-    .then(res => { return res; });
+    const deleteData = await axios.delete(`${baseUrl}/${id}`, config)
+    return deleteData.data;
 };
 
 export default {

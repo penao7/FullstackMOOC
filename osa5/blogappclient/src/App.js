@@ -81,6 +81,7 @@ const App = () => {
         blogService
           .create(newBlog, user.token)
           .then(returnedBlog => {
+            console.log(returnedBlog);
             getBlogs();
             messageHandler(`Blog with title ${returnedBlog.title} added succesfully`);
           })
@@ -172,7 +173,6 @@ const App = () => {
       <h2>add a new blog</h2>
       <BlogFrom
         addBlog={addBlog}
-        messageHandler={messageHandler}
       />
     </Toggable>
   );

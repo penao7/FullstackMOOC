@@ -115,8 +115,6 @@ describe('Blog app', () => {
         });
 
         it('blogs are sorted by likes', () => {
-          cy.contains('TestiBlog3').contains('view').click().get('.likes');
-
           cy.get('.blog').then($li => {
 
             expect($li).to.have.length(4);
