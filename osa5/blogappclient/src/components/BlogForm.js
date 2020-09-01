@@ -24,16 +24,19 @@ const BlogForm = ({ addBlog }) => {
   };
 
   return (
-    <div>
+    <div className="formDiv">
       <form>
         <div>
-        title: <input value={newBlog.title} name='title' onChange={handleInputChange} />
+          <label htmlFor='title'>title</label>
+          <input value={newBlog.title} id='title' name='title' onChange={handleInputChange} />
         </div>
         <div>
-        author: <input value={newBlog.author} name='author' onChange={handleInputChange} />
+          <label htmlFor='author'>author</label>
+          <input value={newBlog.author} id='author' name='author' onChange={handleInputChange} />
         </div>
         <div>
-        url: <input value={newBlog.url} name='url' onChange={handleInputChange} />
+          <label htmlFor='url'>url</label>
+          <input value={newBlog.url} id='url' name='url' onChange={handleInputChange} />
         </div>
         <div style={{ marginTop: 10 }}>
           <button onClick={(e) => handleBlogAdd(e)}>add</button>

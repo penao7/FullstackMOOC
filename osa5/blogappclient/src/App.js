@@ -50,8 +50,10 @@ const App = () => {
     blogService
       .update(id, newBlog)
       .then(newData => {
+        console.log(newData);
         setBlogs(blogs.map(blog => blog.id !== id ? blog : newData));
-        messageHandler(`Contact ${newBlog.name} updated!`);
+        getBlogs();
+        messageHandler(`Contact ${newBlog.title} updated!`);
       })
       .catch(err => messageHandler(null, JSON.stringify(err.response.data)));
   };
@@ -72,8 +74,8 @@ const App = () => {
     return (
       blogs.some(blog => blog.title.toLocaleLowerCase() === newBlog.title.toLocaleLowerCase())
         ?
-        window.confirm(`Contact ${newBlog.name} is already added to bloglist, replace the old number with a new one?`)
-          ? updateBlog(blogs.find(blogs => blogs.title.toLocaleLowerCase() === newBlog.name.toLocaleLowerCase()).id, newBlog)
+        window.confirm(`Blog ${newBlog.title} is already added to bloglist, replace its content with new one?`)
+          ? updateBlog(blogs.find(blog => blog.title.toLocaleLowerCase() === newBlog.title.toLocaleLowerCase()).id, newBlog)
           : ''
         :
         blogService
@@ -87,15 +89,22 @@ const App = () => {
   };
 
   const messageHandler = (success, err) => {
-    setTimeout(() => {
+
+    let timer;
+
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
       setMessage('');
     }, 5000);
 
-    return (
-      success
-        ? setMessage({ status: true, message: success })
-        : setMessage({ status: false, message: err })
-    );
+    if (success) {
+      setMessage({ status: true, message: success });
+    } else if (err) {
+      setMessage({ status: false, message: err });
+    }
   };
 
   const handleDelete = (id) => {
@@ -151,7 +160,7 @@ const App = () => {
       .update(id, newBlog)
       .then(returnedBlog => {
         setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog));
-        messageHandler(`Blog with title ${returnedBlog.title} liked succesfully`);
+        messageHandler(`Blog with title ${returnedBlog.title} liked succesfully`, null);
       })
       .catch(err => messageHandler(null, JSON.stringify(err.response.data)));
   };

@@ -27,11 +27,11 @@ const Notification = ({ message }) => {
   return (
     message.status
       ?
-      <div style={notificationSuccessStyles}>
+      <div className='success' style={notificationSuccessStyles}>
         <h3>{message.message}</h3>
       </div>
       :
-      <div style={notificationErrStyles}>
+      <div className='error' style={notificationErrStyles}>
         <h3>{message.message}</h3>
       </div>
   );

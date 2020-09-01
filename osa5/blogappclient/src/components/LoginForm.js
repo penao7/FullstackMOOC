@@ -23,6 +23,7 @@ const LoginForm = ({ handleLogin }) => {
     <form>
       <div>
         <input
+          id='username'
           name='username'
           placeholder='username'
           value={username}
@@ -31,13 +32,14 @@ const LoginForm = ({ handleLogin }) => {
       </div>
       <div style={{ marginBottom: 10 }}>
         <input
+          id='password'
           name='password'
           placeholder='password'
           value={password}
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button onClick={(e) => handleFinalLogin(e)}>Submit</button>
+      <button id='login-button' onClick={(e) => handleFinalLogin(e)}>Submit</button>
     </form>
   );
 };
