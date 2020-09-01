@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhYWphIiwiaWQiOiI1ZjQ1MDM5NzllN2JiNjMxNjgzMmU2ZTQiLCJpYXQiOjE1OTgzNjU0ODl9.xgsEmC_go3zTwoknkhAEpTI7kAoFdsv1fWMQO_LP4c8
+
+{
+  "userId": "5f4503979e7bb6316832e6e4",
+  "author": "Mikael Testdsadsa", 
+  "url": "http:fidadsa",
+  "title": "toimiikohantama"
+}
