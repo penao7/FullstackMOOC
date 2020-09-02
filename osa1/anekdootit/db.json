@@ -1,0 +1,29 @@
+{
+  "anecdotes": [
+    {
+      "content": "testi",
+      "votes": 144,
+      "id": "DbcQauq"
+    },
+    {
+      "content": "testi2",
+      "votes": 112,
+      "id": "KwLFmOY"
+    },
+    {
+      "content": "dsa",
+      "votes": 15,
+      "id": "Tooj6qx"
+    },
+    {
+      "content": "moi",
+      "votes": 9,
+      "id": "2-pesrp"
+    },
+    {
+      "content": "dsadkask",
+      "votes": 4,
+      "id": "xPhotH2"
+    }
+  ]
+}
