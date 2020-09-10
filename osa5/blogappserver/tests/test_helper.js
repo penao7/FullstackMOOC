@@ -42,21 +42,21 @@ export const initialBlogs2 = [
 export const initialBlogs = [
   {
     title: 'Mandoliinimies',
-    user: id,
+    user: 'tester',
     author: 'd',
     likes: 8,
     url: blogUrl
   },
   {
     title: 'Canonical string reduction',
-    user: id,
+    user: 'tester',
     author: 'a',
     likes: 20,
     url: blogUrl
   },
   {
     title: 'World order',
-    user: id,
+    user: 'tester',
     author: 'c',
     likes: 10,
     url: blogUrl

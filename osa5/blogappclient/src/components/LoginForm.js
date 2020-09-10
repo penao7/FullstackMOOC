@@ -1,51 +1,67 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../redux/actioncreators';
+import { useField } from '../hooks';
+import { Form, Button, Modal } from 'react-bootstrap';
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = () => {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
-  const handleInputChange = (target) => {
-    if (target.name === 'username') {
-      setUsername(target.value);
-    }
-    else if (target.name === 'password')
-      setPassword(target.value);
+  const [show, setShow] = useState(false);
+
+  const toggleModal = () => {
+    setShow(!show);
   };
 
-  const handleFinalLogin = (e) => {
+  const username = useField('text');
+  const password = useField('password');
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    handleLogin(username, password);
+    const credentials = { username: username.value, password: password.value }
+    dispatch(loginUser(credentials));
+    toggleModal();
+  };
+
+  const finalInput = (input) => {
+    const { reset, ...props } = input;
+    return <Form.Control {...props} />
   };
 
   return (
-    <form>
-      <div>
-        <input
-          id='username'
-          name='username'
-          placeholder='username'
-          value={username}
-          onChange={({ target }) => handleInputChange(target)}
-        />
-      </div>
-      <div style={{ marginBottom: 10 }}>
-        <input
-          id='password'
-          name='password'
-          placeholder='password'
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button id='login-button' onClick={(e) => handleFinalLogin(e)}>Submit</button>
-    </form>
-  );
-};
+    <div className="container">
+      <div className="col-12">
+        <span onClick={toggleModal}>
+          Login
+      </span>
 
-LoginForm.propTypes = {
-  handleLogin: PropTypes.func.isRequired
+        <Modal show={show} onHide={toggleModal}>
+          <Modal.Title className="text-center">
+            User Login
+          </Modal.Title>
+          <Modal.Body>
+            <Form onSubmit={handleLogin}>
+              <Form.Group>
+                <Form.Label>Username</Form.Label>
+                {finalInput(username)}
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                {finalInput(password)}
+              </Form.Group>
+              <Button onClick={toggleModal} variant="secondary" type="submit">
+                Cancel
+              </Button>
+              <Button onClick={handleLogin} className="float-right" variant="primary" type="submit">
+                Submit
+            </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      </div>
+    </div>
+  );
 };
 
 export default LoginForm;

@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteBlog } from '../redux/actioncreators';
+import { Link } from 'react-router-dom';
+import { Button, ListGroup } from 'react-bootstrap';
 
 const listStyle = {
   listStylePosition: 'inside',
@@ -7,44 +11,36 @@ const listStyle = {
   padding: 0
 };
 
-const Blog = ({ blog, handleDelete, handleLike, user }) => {
+const Blog = ({ blog, user }) => {
 
-  const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
 
-  const toggleVisibility = () => {
-    setVisible(!visible);
-  };
-
-  const doLike = () => {
-    let newBlog = blog;
-    newBlog.likes = newBlog.likes + 1;
-
-    handleLike(blog.id, newBlog);
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete blog with title ${blog.title}`)) {
+      dispatch(deleteBlog(blog.id));
+    };
   };
 
   return (
-    <div className='blog' style={{ border: '1px solid black', padding: 5, marginTop: 10 }}>
-      <ul key={blog.id} style={listStyle}>
-        <li className="data"> 
-            {`${blog.title} ${blog.author}`}
-          <button style={{ marginLeft: 5 }} onClick={() => toggleVisibility()}>{!visible ? 'view' : 'hide'}</button>
+    blog
+      ?
+      <ListGroup key={blog.id} style={listStyle}>
+        <ListGroup.Item className="mt-1 data">
+          <Link to={`/blogs/${blog.id}`}>{`${blog.title} ${blog.author}`}</Link>
           {
             blog.user.username === user.username
               ?
-              <button style={{ marginLeft: 5 }} onClick={() => handleDelete(blog.id)}>delete</button>
+              <Button
+                className="btn-danger btn-sm float-right"
+                onClick={() => handleDelete()}
+              >
+                delete
+              </Button>
               : ''
           }
-        </li>
-        <div className='toggableContent' style={{ display: !visible ? 'none' : '' }}>
-          <li>{blog.url}</li>
-          <li className="likes">
-            {`likes ${blog.likes}`}
-            <button style={{ marginLeft: 5 }} onClick={() => doLike()}>like</button>
-          </li>
-          <li>{blog.user.name}</li>
-        </div>
-      </ul>
-    </div>
+        </ListGroup.Item>
+      </ListGroup >
+      : ''
   );
 };
 

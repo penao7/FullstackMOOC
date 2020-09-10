@@ -22,7 +22,6 @@ const create = async (newBlog) => {
   };
     const returnedNewBlog = await axios.post(baseUrl, newBlog, config);
     return returnedNewBlog.data;
-
 };
 
 const update = async (id, newBlog) => {

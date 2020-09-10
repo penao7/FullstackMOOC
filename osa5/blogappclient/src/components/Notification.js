@@ -1,39 +1,20 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 
-const Notification = ({ message }) => {
-
-  const notificationErrStyles = {
-    color: 'red',
-    background: 'lightgrey',
-    fontSize: '20px',
-    borderStyle: 'solid',
-    borderRadius: '5px',
-    padding: '10px',
-    marginBottom: '10px',
-    width: '700px'
-  };
-
-  const notificationSuccessStyles = {
-    color: 'green',
-    background: 'lightgrey',
-    fontSize: '20px',
-    borderStyle: 'solid',
-    borderRadius: '5px',
-    padding: '10px',
-    marginBottom: '10px',
-    width: '700px'
-  };
+const Notification = ({ info, error }) => {
 
   return (
-    message.status
+    info
       ?
-      <div className='success' style={notificationSuccessStyles}>
-        <h3>{message.message}</h3>
-      </div>
-      :
-      <div className='error' style={notificationErrStyles}>
-        <h3>{message.message}</h3>
-      </div>
+      <Alert variant='success'>
+        {info}
+      </Alert>
+      : error
+        ?
+        <Alert variant='danger'>
+          {error}
+        </Alert>
+        : ''
   );
 };
 

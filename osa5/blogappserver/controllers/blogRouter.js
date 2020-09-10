@@ -3,6 +3,7 @@ import Blog from '../models/blogs.js';
 import User from '../models/users.js';
 import jwt from 'jsonwebtoken';
 import config from '../utils/config.js';
+import Comment from '../models/comments.js';
 
 const blogRouter = express.Router();
 
@@ -10,7 +11,8 @@ blogRouter
   .get('/', async (req, res) => {
     const blogs = await Blog
       .find({})
-      .populate('user', { username: 1, name: 1 });
+      .populate('user', { username: 1, name: 1 })
+      .populate('comments');
 
     res.json(blogs.map(blog => blog.toJSON()));
   })
@@ -26,7 +28,7 @@ blogRouter
     let likes = 0;
 
     // eslint-disable-next-line no-undef
-    if(process.env.NODE_ENV.trim()) {
+    if (process.env.NODE_ENV.trim()) {
       likes = body.likes;
     }
 
@@ -42,13 +44,17 @@ blogRouter
     user.blogs = user.blogs.concat(savedBlog._id);
     await user.save();
 
-    res.status(201).json(savedBlog.toJSON());
+    if(savedBlog) {
+      const populatedBlog = await Blog.findById(savedBlog._id).populate('user');
+      res.status(201).json(populatedBlog.toJSON());
+    }
+
   });
 
 blogRouter
   .get('/:id', async (req, res) => {
     const id = req.params.id;
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findById(id).populate('comments');
 
     if (blog) {
       res.send(blog);
@@ -58,14 +64,15 @@ blogRouter
 
   })
   .delete('/:id', async (req, res) => {
+
     const id = req.params.id;
     const decodedToken = jwt.verify(req.token, config.SECRET);
     const blog = await Blog.findById(id);
     const user = await User.findById(decodedToken.id);
 
     if (blog.user.toString() === decodedToken.id.toString() && user.username === decodedToken.username) {
-      await Blog.findByIdAndDelete(blog.id);
-      res.status(204).end();
+      const result = await Blog.findByIdAndDelete(blog.id);
+      res.status(204).send(result);
     } else {
       res.status(401).send({ error: 'not authorized' });
     }
@@ -73,7 +80,6 @@ blogRouter
   })
   .put('/:id', async (req, res) => {
     const id = req.params.id;
-    console.log(req.body);
     let newValues = {};
 
     if (req.body.title) {
@@ -84,23 +90,54 @@ blogRouter
       newValues.likes = req.body.likes;
     }
 
-    if(req.body.author) {
+    if (req.body.author) {
       newValues.author = req.body.author;
     }
 
-    if(req.body.url) {
+    if (req.body.url) {
       newValues.url = req.body.url;
     }
 
     const updatedBlog = await Blog.findByIdAndUpdate(id,
       newValues
       , { new: true });
+
     if (updatedBlog) {
-      const newBlog = await Blog.findById(updatedBlog.id).populate('user');
+      const newBlog = await Blog.findById(updatedBlog.id).populate('user').populate('comments');
       res.send(newBlog.toJSON());
     } else {
       res.status(400).end();
     }
+  });
+
+blogRouter
+  .get('/:id/comments', async (req, res) => {
+    const id = req.params.id;
+    const comments = await Comment.find({ blog: id });
+    res.json(comments.map(comment => comment.toJSON()));
+  })
+  .post('/:id/comments', async (req, res) => {
+
+    const id = req.params.id;
+    const blog = await Blog.findById(id);
+
+    const comment = new Comment({
+      comment: req.body.comment,
+      blog: id
+    });
+
+    const savedComment = await comment.save();
+    blog.comments = blog.comments.concat(savedComment._id);
+    await blog.save();
+
+    res.status(201).json(savedComment.toJSON());
+  });
+
+blogRouter
+  .get('/:id/comments/:commentId', async (req, res) => {
+    const id = req.params.commentId;
+    const comment = await Comment.findById(id);
+    res.send(comment.toJSON());
   });
 
 export default blogRouter;

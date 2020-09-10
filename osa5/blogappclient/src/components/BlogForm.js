@@ -1,55 +1,76 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, Fragment } from 'react';
+import { useField } from '../hooks/';
+import { addBlog } from '../redux/actioncreators';
+import { useDispatch } from 'react-redux';
+import { Modal, Form, Button } from 'react-bootstrap';
 
-const BlogForm = ({ addBlog }) => {
+const BlogForm = () => {
 
-  const [newBlog, setNewBlog] = useState({
-    title: '',
-    author: '',
-    url: ''
-  });
+  const dispatch = useDispatch();
 
-  const handleInputChange = (e) => {
-    setNewBlog({ ...newBlog, [e.target.name]: e.target.value });
+  const [show, setShow] = useState(false);
+
+  const toggleModal = () => {
+    setShow(!show);
   };
 
-  const handleBlogAdd = (e) => {
+  const title = useField('text');
+  const author = useField('text');
+  const url = useField('text');
+
+  const createBlog = (e) => {
     e.preventDefault();
-    addBlog(newBlog);
-    setNewBlog({
-      title: '',
-      author: '',
-      url: ''
-    });
+    const newBlog = {
+      title: title.value,
+      author: author.value,
+      url: url.value
+    };
+    toggleModal();
+    return (
+      dispatch(addBlog(newBlog))
+    );
+  };
+
+  const finalInput = (field) => {
+    const { reset, ...props } = field;
+    return <Form.Control {...props} />
   };
 
   return (
-    <div className="formDiv">
-      <form>
-        <div>
-          <label htmlFor='title'>title</label>
-          <input value={newBlog.title} id='title' name='title' onChange={handleInputChange} />
-        </div>
-        <div>
-          <label htmlFor='author'>author</label>
-          <input value={newBlog.author} id='author' name='author' onChange={handleInputChange} />
-        </div>
-        <div>
-          <label htmlFor='url'>url</label>
-          <input value={newBlog.url} id='url' name='url' onChange={handleInputChange} />
-        </div>
-        <div style={{ marginTop: 10 }}>
-          <button onClick={(e) => handleBlogAdd(e)}>add</button>
-        </div>
-      </form>
-    </div>
+    <Fragment>
+      <span onClick={toggleModal}>
+        Add Blog
+      </span>
+
+      <Modal show={show} onHide={toggleModal}>
+        <Modal.Body>
+          <Modal.Title className="text-center">
+            Add blog
+          </Modal.Title>
+          <Form>
+            <Form.Group>
+              <Form.Label>title</Form.Label>
+              {finalInput(title)}
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>author</Form.Label>
+              {finalInput(author)}
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>url</Form.Label>
+              {finalInput(url)}
+            </Form.Group>
+            <Button onClick={toggleModal} variant="secondary">
+              close
+          </Button>
+            <Button onClick={createBlog} className="float-right" variant="primary">
+              submit
+          </Button>
+          </Form >
+        </Modal.Body>
+      </Modal>
+    </Fragment>
   );
 };
-
-BlogForm.propTypes = {
-  addBlog: PropTypes.func.isRequired
-};
-
-
 
 export default BlogForm;
