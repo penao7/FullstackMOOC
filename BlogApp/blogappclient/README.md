@@ -9,9 +9,10 @@ Example JSON-object for the request could look like this:
 { "name": "tester", "username": "example", "password": "password" }
 ```
 
-App can be ran by using command
+App can be ran by using commands
 
 ```
+$ npm install
 $ npm run start 
 ```
 
