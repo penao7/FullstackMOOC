@@ -87,8 +87,8 @@ Delete all blogs and users
 /api/reset
 ```
 
+Tests with jest can be ran by using command
 
-
-
-
-
+```
+$ npm run test
+```
