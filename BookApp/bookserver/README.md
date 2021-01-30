@@ -1,6 +1,6 @@
 # Book-App Server
 
-This server is implemented using [Apollo GraphQL](/https://www.apollographql.com/) server for [Blog-App Client](/BlogApp/blogappclient).
+This server is implemented using [Apollo GraphQL](/https://www.apollographql.com/) server for [Book-App Client](/BookApp/bookclient).
 
 ## Usage
 
