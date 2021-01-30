@@ -4,6 +4,23 @@ This server is implemented using Node.js together with Express.js for [Blog-App 
 
 To get authorization, a new user needs to be created and token received (see users endpoint).
 
+## Usage
+
+production:
+```
+npm run start
+```
+dev with [nodemon](https://www.npmjs.com/package/nodemon):
+```
+npm run dev
+```
+run tests with jest:
+
+```
+npm run test
+```
+
+
 ## Endpoints:
 
 ### Users
@@ -80,15 +97,9 @@ GET /api/blogs/:id/:commentId
 
 ### Testing
 
-Testing is available when NODE_ENV is set as test.
+Test-endpoint is available when NODE_ENV is set as test.
 
 Delete all blogs and users
 ```
 /api/reset
-```
-
-Tests with jest can be ran by using command
-
-```
-$ npm run test
 ```
