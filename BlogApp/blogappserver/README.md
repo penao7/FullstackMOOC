@@ -125,7 +125,7 @@ mutation {
 ```
 
 
-Get the total number of books added:
+Get the total number of authors added:
 
 ```graphql
 query {
