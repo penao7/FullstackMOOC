@@ -1,4 +1,4 @@
 # Blog-App Server
 
-This server is implemented using [Apollo GraphQL](/https://www.apollographql.com/) server for [Blog-App Client](/BlogApp/blogappclient).
+This server is implemented using Node.js together with Express.js for [Blog-App Client](/BlogApp/blogappclient).
 
