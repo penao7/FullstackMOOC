@@ -16,8 +16,4 @@ $ npm install
 $ npm run start 
 ```
 
-Tests for the app are made by using [cypress](https://www.cypress.io/) and can be used by installing dev dependencies and running command
-
-```
-$ cypress:open
-```
+Tests for the app are implemented by using [cypress](https://www.cypress.io/).
