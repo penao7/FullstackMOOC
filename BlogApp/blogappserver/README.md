@@ -2,7 +2,7 @@
 
 This server is implemented using Node.js together with Express.js for [Blog-App Client](/BlogApp/blogappclient).
 
-To get authorization, a new user needs to be created and token received (see User endpoint).
+To get authorization, a new user needs to be created and token received (see users endpoint).
 
 ## Endpoints:
 
