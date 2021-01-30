@@ -8,18 +8,17 @@ To get authorization, a new user needs to be created and token received (see use
 
 production:
 ```
-npm run start
+$ npm run start
 ```
 dev with [nodemon](https://www.npmjs.com/package/nodemon):
 ```
-npm run dev
+$ npm run dev
 ```
 run tests with jest:
 
 ```
-npm run test
+$ npm run test
 ```
-
 
 ## Endpoints:
 
