@@ -11,13 +11,30 @@ $ npm run start
 
 Now you can access GraphQL playground at http://localhost:4000/graphql.
 
-If a token is needed, you can add it to HTTP HEADERS tab below the query editor after logging in (see below):
+If a token is needed, you can add it to HTTP HEADERS tab below the query editor after logging in (see Login below to acquire token):
 
 ```graphql
 {
   "Authorization": "Bearer <ACCESS_TOKEN>"
 }
 ```
+  
+### Roles
+
+When adding a user, user role can be defined as an `ADMIN` or `USER` (see Signup below). 
+
+#### USER features:
+- Login
+- Adding books
+- Recommendations tab which lists all the books which are in favorite genre defined in signup
+
+#### ADMIN features:
+ 
+All USER features but additionally
+
+ - Delete books
+ - List users
+ - Change born date of authors
 
 ### Users
 
@@ -25,7 +42,7 @@ Signup:
 
 ```graphql  
 mutation { 
-  createUser(username: "test", favoriteGenre: "example") {
+  createUser(username: "test", password: "example", favoriteGenre: "adventure", role: "USER", ) {
       id
       username
       favoritegenre
@@ -43,12 +60,13 @@ mutation {
 }
 ```
 
-To get information from the token:
+To get information from the token (token required):
 
 ```graphql
 query {
   me {
-    username, 
+    username,
+    role,
     id, 
     favoriteGenre
   }
@@ -57,18 +75,26 @@ query {
 
 ### Books
 
-Get all books:
+Get all books with pageInfo:
 
 ```graphql
 query {
-  allBooks { 
+  allBooks {
     docs {
-      title
-      author
-      published
-      genres
-      id
-     }
+      title, 
+      genres, 
+      published,
+      author {
+        name, 
+        born, 
+        bookCount
+      }
+    }
+    	pageInfo {
+        pages, 
+        prevPage, 
+        nextPage
+      }
   }
 }
 ```
