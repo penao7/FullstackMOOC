@@ -1,5 +1,5 @@
 # FullstackMOOC
-Applications made throughout the [Full Stack Open](https://fullstackopen.com/#course-contents)-course.
+Here are stored some of the applications that were made throughout the [Full Stack Open](https://fullstackopen.com/#course-contents)-course.
 
 ## [Blog-App](/BlogApp)
   Blog app with Node.js Express-server implementation and frontend made with React. Backend testing with jest together with supertest and Frontend testing with 
