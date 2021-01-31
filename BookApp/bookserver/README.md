@@ -19,16 +19,16 @@ If a token is needed, you can add it to HTTP HEADERS tab below the query editor 
 }
 ```
   
-### Roles
+## Roles
 
 When adding a user, user role can be defined as an `ADMIN` or `USER` (see Signup below). 
 
-#### USER features:
+### USER features:
 - Login
 - Adding books
 - Recommendations tab which lists all the books which are in favorite genre defined in signup
 
-#### ADMIN features:
+### ADMIN features:
  
 All USER features but additionally
 
@@ -75,7 +75,7 @@ query {
 
 ### Books
 
-Get all books with pageInfo:
+Get all the books with pageInfo:
 
 ```graphql
 query {
