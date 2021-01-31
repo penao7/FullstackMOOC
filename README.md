@@ -10,26 +10,25 @@ Features:
 - Blog CRUD-operations
 - Blog likes
 - Blog listing by user
-  
-## [Book-App](/BookApp)
-
- Book app for managing books. Backend is created using [Apollo GraphQL](https://www.apollographql.com/) and frontend using React.
-  
- Features:
- - User login
- - Book CRUD-operations
- - Pagination
- - Books can be filtered by genre
- - Subscription for adding books
-
-## [Country-hook](/country-hook)
-
-  
 
 ## [Course-details](/kurssitiedot)
+
+- Simple exercise for splitting the React application for multiple components
+
 ## [Country-details](/maidentiedot)
+
+- Get detailed information about countries by name
+
 ## [Phonebook](/puhelinluettelo)
-## [Routed-anectotes](/routed-anecdotes)
+
+- Add contacts to a phonebook with ability to delete them as well
+- Filter contacts by just typing to a filter field
+
 ## [Ultimate-hooks](/ultimate-hooks)
+
+- App for adding notes and persons 
+
 ## [Unicafe](/unicafe)
+
+- Keeps count of rating statistics and calculates the percentage of how many of the given ratings were positive. Additionally calculates average score.
 
